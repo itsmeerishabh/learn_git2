@@ -1,0 +1,205 @@
+Q1.Retrieve users who made a review with a rating of 5:
+
+select u.UserName
+from Users u
+inner join Reviews r on u.UserID = r.UserID
+where r.Rating =5
+
++--------------+
+| UserName     |
++--------------+
+| JaneSmith    |
+| CharlieBrown |
+| GraceTaylor  |
++--------------+
+
+
+Q2-Retrieve products with a stock quantity less than 20 or a price greater than $200:
+
+select ProductName
+from Products
+where StockQuantity<20 or Price>200;
+
++----------------+
+| ProductName    |
++----------------+
+| Laptop         |
+| Smartphone     |
+| Digital Camera |
++----------------+
+3 rows in set (0.00 sec
+
+
+Q5-Write a query to Display the UserName for users where UserName contain character 'i' after 2nd position.
+
+select UserName
+from Users
+where UserName Like "__i%";
+
++---------------+
+| UserName      |
++---------------+
+| AliceWilliams |
+| OliviaWhite   |
++---------------+
+
+Q6-Find users who have made multiple orders and the total order count (use join)
+
+select u.UserName,od.Quantity
+from Users u
+inner join Orders o
+on u.UserID = o.UserID
+inner join OrderDetails od
+on o.OrderID = od.OrderID
+where od.Quantity>1;
+
++--------------+----------+
+| UserName     | Quantity |
++--------------+----------+
+| JohnDoe      |        2 |
+| BobJohnson   |        3 |
+| CharlieBrown |        2 |
+| DavidClark   |        4 |
+| SamuelLee    |        2 |
+| OliviaWhite  |        3 |
++--------------+----------+
+
+Q7.Extract order details of GraceTaylor.(use subquery)
+
+select * 
+from OrderDetails
+where OrderId = (select OrderID from Orders where UserId = (select UserId from Users where UserName = "GraceTaylor"));
+
++---------------+---------+-----------+----------+
+| OrderDetailID | OrderID | ProductID | Quantity |
++---------------+---------+-----------+----------+
+|             8 |       8 |        10 |        1 |
++---------------+---------+-----------+----------+
+
+Q8.Find users who have not made any orders and have not submitted any reviews.
+
+select u.UserName
+from Users u
+inner join Orders o
+on u.UserID = o.UserID
+inner join Reviews r
+on u.UserID = r.UserID
+where o.OrderID is null and r.comment is null;
+
+Empty set (0.00 sec)
+
+Q9-Retrieve the user name, email, and total quantity of products ordered by users aged 30 or above.(use join)
+
+select u.UserName,u.Email,od.Quantity
+from Users u
+inner join Orders o
+on u.UserID = o.UserID
+inner join OrderDetails od
+on o.OrderID = od.OrderID
+where u.Age>=30 
+order by u.UserName;
+
+
++--------------+-------------------------+----------+
+| UserName     | Email                   | Quantity |
++--------------+-------------------------+----------+
+| CharlieBrown | charlie.brown@email.com |        2 |
+| DavidClark   | david.clark@email.com   |        4 |
+| JaneSmith    | jane.smith@email.com    |        1 |
+| OliviaWhite  | olivia.white@email.com  |        3 |
++--------------+-------------------------+----------+
+
+Q10-
+Find the total number of orders placed in each month along with the month and year.
+
+select count(OrderID)as No of order,Month(OrderDate),Year(OrderDate)
+from Orders
+group by Month(OrderDate),Year(OrderDate);
+
+
++-------------+------------------+-----------------+
+| No_of_order | Month(OrderDate) | Year(OrderDate) |
++-------------+------------------+-----------------+
+|          10 |               11 |            2023 |
++-------------+------------------+-----------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+Q16
+
+Display name of product staring with 'P'. [Marks - 2]
+
+db.product.find({
+    sku:/^P/
+},{
+    sku:1,
+    _id:0
+})
+
+
+{ "sku" : "Paper" }
+
+
+
+Question 15:
+
+Display name of product having price greater than 30 and less than 50.[Marks - 2]
+
+db.orders.find({
+$and:[
+{price:{$gt:30}},
+{price:{$lt:50}}
+]
+},
+{item:1,_id:0}
+)
+
+{ "item" : "notebook" }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+  
+
+

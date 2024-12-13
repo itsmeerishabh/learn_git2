@@ -1,0 +1,37 @@
+Q11-
+Write a SQL procedure that accepts a ProductID from the Products table and categorizes the product based on its stock quantity as follows:
+
+--86814 roll no
+
+StockQuantity < 100: RARELY PURCHASED
+StockQuantity between 100 and 500: FREQUENTLY PURCHASED
+StockQuantity > 500: VERY POPULAR
+The procedure should output the ProductID, the StockQuantity, and the determined
+
+
+DROP PROCEDURE IF EXISTS product;
+DELIMITER $$
+CREATE PROCEDURE product(IN p_id INT)
+BEGIN
+
+
+   select StockQuantity
+   from Products
+   where ProductID = p_id
+   
+   IF StockQuantity< 100 THEN
+        SELECT "FREQUENTLY PURCHASED" AS msg;
+   
+   IF StockQuantity>100 and StockQuantity< 500 THEN
+        SELECT "FREQUENTLY PURCHASED" AS msg;
+   ELSE
+        SELECT "very popular" AS msg;
+   END IF;
+END;
+$$
+DELIMITER ;
+   
+        
+        
+        
+        
